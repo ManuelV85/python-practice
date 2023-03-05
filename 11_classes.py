@@ -15,7 +15,45 @@ print(MyEmptyPerson()) #los () seran necesarios cuando se tenga que pasar algo
 
 class Person:
     def __init__(self, name, surname):  #constructor de la clase
-        pass 
+        self.name = name
+        self.surname = surname
+
+#en el siguiente ejemplo de clase, se crea una propiedad almacenada que es full_name
 
 my_person = Person("manuel", "Villate")  #a la variable le asigno la clase
-print(my_person)
+print(my_person.name)
+print(f"{my_person.name} {my_person.surname}")
+
+class PersonFull:
+    def __init__(self, name, surname,):
+        self.full_name = f"{name} {surname}"
+
+#puedo crear funciones 
+#la función dentro de la clase le podemos parsar el parametro self.
+    def walk(self):
+        print(f"{self.full_name} esta caminando")
+
+my_person_full = PersonFull("Manuel", "Villate")
+print(my_person_full.full_name)
+my_person_full.walk() #forma de llamar a la función
+
+#le podemos pasar valores por defecto "alias"
+class PersonFull:
+    def __init__(self, name, surname, alias = "4dev.manu"):
+        self.full_name = f"{name} {surname} ({alias})"
+
+#puedo crear funciones 
+#la función dentro de la clase le podemos parsar el parametro self.
+    def walk(self):
+        print(f"{self.full_name} esta caminando")
+
+my_person_full = PersonFull("Manuel", "Villate")
+print(my_person_full.full_name)
+my_person_full.walk() #forma de llamar a la función
+
+my_person_full.full_name = "Solangel (La loca del cel)"
+print(my_person_full.full_name)
+
+
+
+        
