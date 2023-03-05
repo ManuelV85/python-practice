@@ -41,6 +41,10 @@ my_person_full.walk() #forma de llamar a la función
 class PersonFull:
     def __init__(self, name, surname, alias = "4dev.manu"):
         self.full_name = f"{name} {surname} ({alias})"
+        self.__name = name #propiedad privada: no se puede acceder para modificar
+
+    def get_name(self):
+        return self.__name  #forma de solo ver el valor que contiene name
 
 #puedo crear funciones 
 #la función dentro de la clase le podemos parsar el parametro self.
@@ -49,10 +53,13 @@ class PersonFull:
 
 my_person_full = PersonFull("Manuel", "Villate")
 print(my_person_full.full_name)
+print(my_person_full.get_name())
 my_person_full.walk() #forma de llamar a la función
 
 my_person_full.full_name = "Solangel (La loca del cel)"
 print(my_person_full.full_name)
+
+
 
 
 
