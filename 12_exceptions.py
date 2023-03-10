@@ -79,5 +79,7 @@ except ValueError:
 try:
     print(number_one + number_two)
     print("No se ha producido un error") 
-except ValueError as error:
+except ValueError as error: #error es el nombre de una variable que captura el error, ahi puede ir cualquier nombre
     print(error) 
+except Exception as error: #si el error no enentra en value error entra a este bloque.
+    print(error)
