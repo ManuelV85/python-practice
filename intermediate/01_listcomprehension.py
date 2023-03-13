@@ -19,6 +19,7 @@ print(my_list)
 my_list = [i * i  for i in range(8)]
 print(my_list)
 
+#se puede agregar funciones.
 def sum_five(number):
     return number + 5
 
