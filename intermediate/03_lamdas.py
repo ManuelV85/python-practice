@@ -18,5 +18,9 @@ def sum_three_values(value):
 
     return lambda first_value, second_value: first_value + second_value + value
 
-print(sum_three_values(5)(2,4))
+print(sum_three_values(5)(2,4)) #se pasa el valor de value y luego los valores de lambda
 
+"""
+las LAMBDAS no tienen un nombre, y sus parametros pasan a estar imlicitos en el constructor
+de la función original
+"""

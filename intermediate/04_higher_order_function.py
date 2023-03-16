@@ -98,3 +98,4 @@ def sum_two_values(first_value, second_value):
     return first_value + second_value
 
 print(reduce(sum_two_values, numbers))
+#se obtiene un unico valor del iterable

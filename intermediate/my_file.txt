@@ -1,0 +1,6 @@
+Mi nombre es Manuel
+Mi apellido es Villate
+tengo 37 años
+Python es my lenguaje preferido
+
+ Aunque tambien JS
