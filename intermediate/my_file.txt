@@ -1,6 +1,6 @@
-Mi nombre es Manuel
-Mi apellido es Villate
-tengo 37 aÃ±os
-Python es my lenguaje preferido
-
+Mi nomnre es Manuel
+ Mi apellido es Villate
+ mi alias manu.dev
+ mi edad 37 años 
+ y mi lenguaje favorito es python
  Aunque tambien JS
