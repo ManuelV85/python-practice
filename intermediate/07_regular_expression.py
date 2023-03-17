@@ -1,4 +1,4 @@
-### Regular Expresion ###
+### Regular Expression ###
 
 """
 Las expresiones regulares no son algo propio de python, se puede usar estos metodos
@@ -81,8 +81,8 @@ print(re.search(pattern, email))
 print(re.findall(pattern, email))
 
 email = "manu3585@gmail"
-print(re.findall(pattern, email))
+print(re.findall(pattern, email)) #arroja vacio por que no cumple con el patrón
 
 
-
+#Revissar tabla de expresiones regulares. regex101.com
 
