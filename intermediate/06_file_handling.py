@@ -81,3 +81,4 @@ csv_writer.writerow(["Manuel", "Villate", 37, "python", "manu.dev"])
 import xml
 
 xml_file = open("./file4.xml", "w+")
+#buscar en la documentación como leer y escribir
