@@ -55,14 +55,14 @@ async def user(id: int):
 
 #otra forma de hacer lo mismo de las lineas 35 hasta la 52 es declarar una función y llamarla en el return
 
-@app.get("/users/{id}")
+@app.get("/user/{id}")
 async def user(id: int):
     return search_user(id)
 
 #parametros por query
 #http://127.0.0.1:8000/userquery/?id=1 forma de usar query
 
-@app.get("/users/")
+@app.get("/user/")
 async def user(id: int):
     return search_user(id)
 
@@ -76,8 +76,43 @@ y la forma de concatenar en el servidor seria: &name=Manuel
 http://127.0.0.1:8000/users/?id=1&name=Manuel
 
 """
+# POST
+
+@app.post("/user/")
+async def user(user: User):
+    #si el usuario existe no lo agrega y arroja el error, de lo contrario lo agrega 
+    if type(search_user(user.id)) == User:
+        return {"error": "User already exist"}
+    else:
+        users_list.append(user)
+        return user
 
 
+
+# PUT 
+
+@app.put("/user/")
+async def user(user: User):
+
+    found = False
+
+    for index,  saved_user in enumerate(users_list):
+        if  saved_user.id == user.id:
+            users_list[index] = user
+            found = True  
+            return user  
+        
+    if not found:
+        return{"error":"User not update"}
+
+
+# DELETE
+
+@app.delete("/user/{id}")
+def user (id:int):
+    for index, saved_user in enumerate(search_user):
+        if saved_user.id == id:
+            del users_list[index]
 
 def search_user(id:int):
     users = filter(lambda user: user.id == id, users_list)
@@ -85,3 +120,9 @@ def search_user(id:int):
         return list(users)[0]
     except:
         return {"error": "User does not exist"}
+
+"""
+Por lo general el path se usa para parametros que estan fijos y 
+el query para parametros que pueden que no sean necesarios para hacer una petición por ejemplo
+revisar varias publicaciones las cuales se pueden llamar (ejemplo) de las 1 a la 10.
+"""
