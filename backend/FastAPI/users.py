@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -78,15 +78,16 @@ http://127.0.0.1:8000/users/?id=1&name=Manuel
 """
 # POST
 
-@app.post("/user/")
+@app.post("/user/",status_code=201)
 async def user(user: User):
     #si el usuario existe no lo agrega y arroja el error, de lo contrario lo agrega 
     if type(search_user(user.id)) == User:
-        return {"error": "User already exist"}
+        raise HTTPException(status_code = 404, detail ="Users already exist")
     else:
         users_list.append(user)
-        return user
+        return user 
 
+#HTTException se debe importar de FastAPI
 
 
 # PUT 
@@ -110,9 +111,21 @@ async def user(user: User):
 
 @app.delete("/user/{id}")
 def user (id:int):
-    for index, saved_user in enumerate(search_user):
+
+    found = False
+
+    for index, saved_user in enumerate(users_list):
         if saved_user.id == id:
             del users_list[index]
+            found = True
+            return "Deleted susscefull"
+        
+    if not found:
+         return {"error": "User not deleted"}
+
+
+
+
 
 def search_user(id:int):
     users = filter(lambda user: user.id == id, users_list)

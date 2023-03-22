@@ -13,3 +13,7 @@ async def root():
 @app.get("/url")
 async def url():
     return {"url_github":"https://github.com/ManuelV85"}
+
+#la documentación con SWAGER se crea de forma automatica con fastapi... se debe colocar /docs con el servidor levantado
+#para ver la documentación de la API
+
