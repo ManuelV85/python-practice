@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-router = APIRouter()
+router = APIRouter(prefix="/user", tags=["user"])
 
 # para levantar el server "uvicorn users:app --reload"
 

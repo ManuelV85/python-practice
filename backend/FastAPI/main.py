@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from routers import product, users  #importo mi archivo 
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
@@ -18,9 +19,11 @@ async def url():
 
 #la documentación con SWAGER se crea de forma automatica con fastapi... se debe colocar /docs con el servidor levantado
 #para ver la documentación de la API
+# para ver la documentación con swager /docs  o con ReDoc   /redoc
 
 
 # ROUTERS 
 
 app.include_router(product.router)  #router es la instancia que se ha definido dentro del archivo product
 app.include_router(users.router)
+app.mount("/static", StaticFiles(directory= "static"), name="static")
