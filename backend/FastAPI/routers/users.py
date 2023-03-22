@@ -1,7 +1,7 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-app = FastAPI()
+router = APIRouter()
 
 # para levantar el server "uvicorn users:app --reload"
 
@@ -20,14 +20,14 @@ users_list = [User(id = 1, name="Manuel", surname="Villate",url="https://github.
          User(id = 3, name="Angelo", surname="Villate",url="https://github.com/ManuelV85", age=2 )]
 
 #ejemplo
-@app.get("/usersjson")
+@router.get("/usersjson")
 async def usersjson():
     return [{"name":"Manuel", "surname":"Villate", "url":"https://github.com/ManuelV85", "age":37},
             {"name":"Solangel", "surname":"Villate", "url":"https://github.com/ManuelV85", "age":8},
             {"name":"Angelo", "surname":"Villate", "url":"https://github.com/ManuelV85", "age":2},
             ]
 
-@app.get("/users")
+@router.get("/users")
 async def users():
     return users_list
 
@@ -55,14 +55,14 @@ async def user(id: int):
 
 #otra forma de hacer lo mismo de las lineas 35 hasta la 52 es declarar una función y llamarla en el return
 
-@app.get("/user/{id}")
+@router.get("/user/{id}")
 async def user(id: int):
     return search_user(id)
 
 #parametros por query
 #http://127.0.0.1:8000/userquery/?id=1 forma de usar query
 
-@app.get("/user/")
+@router.get("/user/")
 async def user(id: int):
     return search_user(id)
 
@@ -78,7 +78,7 @@ http://127.0.0.1:8000/users/?id=1&name=Manuel
 """
 # POST
 
-@app.post("/user/",status_code=201)
+@router.post("/user/",status_code=201)
 async def user(user: User):
     #si el usuario existe no lo agrega y arroja el error, de lo contrario lo agrega 
     if type(search_user(user.id)) == User:
@@ -92,7 +92,7 @@ async def user(user: User):
 
 # PUT 
 
-@app.put("/user/")
+@router.put("/user/")
 async def user(user: User):
 
     found = False
@@ -109,7 +109,7 @@ async def user(user: User):
 
 # DELETE
 
-@app.delete("/user/{id}")
+@router.delete("/user/{id}")
 def user (id:int):
 
     found = False
