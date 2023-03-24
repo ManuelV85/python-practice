@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from routers import product, users  #importo mi archivo 
+from routers import product, users, basic_auth_users, jwt_auth_users  #importo mi archivo 
 from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
@@ -26,4 +26,8 @@ async def url():
 
 app.include_router(product.router)  #router es la instancia que se ha definido dentro del archivo product
 app.include_router(users.router)
+app.include_router(basic_auth_users.router)
+app.include_router(jwt_auth_users.router)
+
+
 app.mount("/static", StaticFiles(directory= "static"), name="static")
