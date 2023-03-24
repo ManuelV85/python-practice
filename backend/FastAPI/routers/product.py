@@ -6,6 +6,7 @@ from fastapi import APIRouter
 #app = FastAPI()
 router = APIRouter(prefix="/product", tags=["product"], responses= {404:{"message": "Not Founded"}})
 #indico en el prefijo la ruta base y la puedo eliminar de las rutas
+#tags me agrupa la documentación de todo lo que tenga el prefijo (prefix)  http://127.0.0.1:8000/docs
 
 product_list = ["product 1", "product 2", "product 3", "product 4", "product 5"]
 
@@ -18,3 +19,6 @@ async def product():
 @router.get("/{id}")
 async def product(id:int):
     return product_list[id]
+
+hacer la separación con tags y prefix en la api de users
+
