@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
 from db.models.user import User
-from db.schemas.user import user_schema
+from db.schemas.user import user_schema, users_schema
 from db.client import db_client
 
 
@@ -72,19 +72,20 @@ http://127.0.0.1:8000/users/?id=1&name=Manuel
 """
 # POST
 
-@router.post("/",status_code=201)
+@router.post("/",status_code=status.HTTP_201_CREATED)
 async def user(user: User):
     #si el usuario existe no lo agrega y arroja el error, de lo contrario lo agrega 
-    #if type(search_user(user.id)) == User:
-     #   raise HTTPException(status_code = 404, detail ="Users already exist")
+    if type(search_user_by_email(user.email)) == User:
+        raise HTTPException(status_code = 404, detail ="Users already exist")
 
     user_dict = dict(user)
     del user_dict["id"] #para eliminar el id y que mongodb genere automaticamente un id.
 
-    id = db_client.users.insert_one(user_dict).inserted_id
+    id = db_client.local.users.insert_one(user_dict).inserted_id
+    #inserted_id genera un id automatico en mongodb
     #local es la carpeta que esta dentro de la base de datos local en mongo 
     
-    new_user = user_schema(db_client.local.users.find_one({"_id":id})) #la clave unica mongodb la genera de esta manera _id
+    new_user = user_schema(db_client.local.users.find_one({"_id": id})) #la clave unica mongodb la genera de esta manera _id
 
     return User(**new_user) 
 
@@ -126,12 +127,14 @@ def user (id:int):
 
 
 
+#va a ser el criterio, para verificar que no se repita el usuario
 
-
-def search_user(id:int):
-    users = filter(lambda user: user.id == id, users_list)
+def search_user_by_email(email : str):
+    
+    
     try:
-        return list(users)[0]
+        user = db_client.local.users.find_one({"email" : email})
+        return User(**user_schema(user))
     except:
         return {"error": "User does not exist"}
 
