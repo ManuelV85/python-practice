@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from routers import product, users, basic_auth_users, jwt_auth_users  #importo mi archivo 
+from routers import product, users, basic_auth_users, jwt_auth_users, users_db  #importo mi archivo 
 from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
@@ -28,6 +28,7 @@ app.include_router(product.router)  #router es la instancia que se ha definido d
 app.include_router(users.router)
 app.include_router(basic_auth_users.router)
 app.include_router(jwt_auth_users.router)
+app.include_router(users_db.router)
 
 
 app.mount("/static", StaticFiles(directory= "static"), name="static")
