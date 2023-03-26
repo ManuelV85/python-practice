@@ -24,7 +24,7 @@ users_list = [User(id = 1, name="Manuel", surname="Villate",url="https://github.
 
 @router.get("/", response_model= list[User])
 async def users():
-    return users_schema(db_client.local.users.find())
+    return users_schema(db_client.users.find())
 
 """
 #parametros por path
@@ -82,11 +82,11 @@ async def user(user: User):
     user_dict = dict(user)
     del user_dict["id"] #para eliminar el id y que mongodb genere automaticamente un id.
 
-    id = db_client.local.users.insert_one(user_dict).inserted_id
+    id = db_client.users.insert_one(user_dict).inserted_id
     #inserted_id genera un id automatico en mongodb
     #local es la carpeta que esta dentro de la base de datos local en mongo 
     
-    new_user = user_schema(db_client.local.users.find_one({"_id": id})) #la clave unica mongodb la genera de esta manera _id
+    new_user = user_schema(db_client.users.find_one({"_id": id})) #la clave unica mongodb la genera de esta manera _id
 
     return User(**new_user) 
 
@@ -102,7 +102,7 @@ async def user(user: User):
     del user_dict["id"]
 
     try:
-        db_client.local.users.find_one_and_replace(
+        db_client.users.find_one_and_replace(
             {"_id": ObjectId(user.id)}, user_dict)
     except:
         return {"error": "No se ha actualizado el usuario"}
@@ -115,7 +115,7 @@ async def user(user: User):
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def user (id: str):
 
-    found = db_client.local.users.find_one_and_delete({"_id": ObjectId(id)})
+    found = db_client.users.find_one_and_delete({"_id": ObjectId(id)})
           
     if not found:
          return {"error": "User not deleted"}
@@ -128,7 +128,7 @@ def search_user(field : str, key):
     
     
     try:
-        user = db_client.local.users.find_one({field : key})
+        user = db_client.users.find_one({field : key})
         return User(**user_schema(user))
     except:
         return {"error": "User does not exist"}
